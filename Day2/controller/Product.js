@@ -45,7 +45,6 @@ export const deleteProduct = async (req, res) => {
   try {
     const id = req.params.id;
     const { data } = await axios.get(API);
-    console.log(id);
     const product = data.filter((item) => item.id != id);
     if (product) {
       return res.status(200).json({
@@ -62,3 +61,41 @@ export const deleteProduct = async (req, res) => {
     });
   }
 };
+
+export const addProduct = async(req,res)=>{
+  try{
+    const body =  req.body
+    const { data } = await axios.post(API,body);
+    if(!data){
+      throw new Error('Error')
+    }
+    return res.status(200).json({
+      message: "Ok",
+      data
+    })
+  }catch (error) {
+    return res.status(500).json({
+      message: "Loi sever",
+    });
+  }
+}
+
+export const updateProduct = async(req,res)=>{
+  try{
+    const id = req.params.id
+    const body = req.body
+    const { data } = await axios.put(`${API}/${id}`,body);
+    console.log(data)
+    if(!data){
+      throw new Error('Error')
+    }
+    return res.status(200).json({
+      message: "Ok",
+      data
+    })
+  }catch (error) {
+    return res.status(500).json({
+      message: "Loi sever",
+    });
+  }
+}
